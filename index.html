@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MOTO-X | Journey to the Road</title>
 
     <script>
@@ -12,453 +13,238 @@
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-PDC3P7SS');</script>
-<!-- Google Tag Manager -->
-       <style>
-        /* --- RESET & BASIC STYLES --- */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background-color: #f4f4f4; color: #333; line-height: 1.6; }
-        a { text-decoration: none; color: inherit; cursor: pointer; }
-        ul { list-style: none; }
-
-        /* --- HEADER & NAVIGATION --- */
-        header { background: #1a1a1a; color: #fff; padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
-        .logo { font-size: 1.5rem; font-weight: bold; color: #e74c3c; letter-spacing: 1px; }
-        nav ul { display: flex; gap: 20px; }
-        nav a { font-size: 0.9rem; font-weight: 500; transition: color 0.3s; }
-        nav a:hover { color: #e74c3c; }
-        .cta-btn { background: #e74c3c; padding: 0.5rem 1rem; border-radius: 4px; color: white; font-weight: 600; border: none; cursor: pointer; transition: background 0.3s; }
-        .cta-btn:hover { background: #c0392b; }
-
-        /* --- PAGE SECTIONS (Simulating Routing) --- */
-        .page-section { display: none; padding: 2rem 5%; min-height: 80vh; animation: fadeIn 0.5s; }
-        .page-section.active { display: block; }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        /* --- HOME PAGE HERO --- */
-        .hero { 
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1558981806-ec527fa84f3d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
-            background-size: cover;
-            background-position: center;
-            color: #fff; 
-            padding: 6rem 2rem; 
-            text-align: center; 
-            border-radius: 8px; 
-            margin-bottom: 2rem; 
-        }
-        .hero h1 { font-size: 3rem; margin-bottom: 1rem; }
-        .hero p { font-size: 1.2rem; margin-bottom: 2rem; }
-
-        /* --- VEHICLE CARDS & IMAGES --- */
-        .vehicle-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem; }
-        .vehicle-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.3s; }
-        .vehicle-card:hover { transform: translateY(-5px); }
+    })(window,document,'script','dataLayer','GTM-PDC3P7S');</script>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; background: #f4f4f4; color: #333; }
+        nav { background: #111; padding: 15px; color: white; display: flex; justify-content: space-between; align-items: center; }
+        nav h1 { margin: 0; color: #ff4d4d; letter-spacing: 2px; }
+        nav a { color: white; text-decoration: none; margin: 0 15px; font-weight: 500; cursor: pointer; }
         
-        /* Updated Image Container */
-        .card-img { 
-            height: 220px; 
-            background: #ddd; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            overflow: hidden; 
-        }
-        .card-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s;
-        }
-        .vehicle-card:hover .card-img img { transform: scale(1.1); }
-
-        .card-info { padding: 1.5rem; }
-        .card-actions { display: flex; justify-content: space-between; margin-top: 1.5rem; }
-        .btn-outline { border: 1px solid #333; background: transparent; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; transition: all 0.3s; }
-        .btn-outline:hover { background: #333; color: white; }
+        .hero { background: #333; color: white; padding: 100px 20px; text-align: center; }
+        .hero h2 { font-size: 3em; margin: 0; }
+        .btn { background: #ff4d4d; color: white; padding: 10px 20px; border: none; cursor: pointer; font-size: 1.1em; margin-top: 20px; text-decoration: none; display: inline-block; }
         
-        /* --- DETAILS & SPECS --- */
-        .detail-layout { display: flex; gap: 3rem; flex-wrap: wrap; margin-top: 2rem; }
-        .detail-img { flex: 1; min-width: 300px; height: 400px; overflow: hidden; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .detail-img img { width: 100%; height: 100%; object-fit: cover; }
-        .detail-info { flex: 1; min-width: 300px; }
-        .price { color: #e74c3c; font-size: 1.5rem; margin: 0.5rem 0 1.5rem 0; font-weight: bold; }
-        .spec-table { width: 100%; border-collapse: collapse; margin: 2rem 0; background: white; }
-        .spec-table td { padding: 12px; border-bottom: 1px solid #eee; }
-        .spec-table tr:last-child td { border-bottom: none; }
+        .container { padding: 40px 20px; max-width: 1200px; margin: auto; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: center; transition: transform 0.2s; }
+        .card:hover { transform: translateY(-5px); }
+        .card img { width: 100%; height: 200px; object-fit: cover; border-radius: 5px; background: #eee; }
+        .price { color: #ff4d4d; font-weight: bold; font-size: 1.2em; }
 
-        /* --- COMPARE --- */
-        .compare-container { display: flex; gap: 1rem; overflow-x: auto; padding-bottom: 1rem; }
-        .compare-col { flex: 1; background: white; padding: 1.5rem; border-radius: 8px; min-width: 250px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); text-align: center; }
-        .compare-col h3 { margin-bottom: 1rem; color: #e74c3c; }
-        .compare-col p { padding: 0.5rem 0; border-bottom: 1px solid #f4f4f4; }
+        /* Comparison Section Styles */
+        #compare-section { display: none; background: white; padding: 40px; margin-top: 40px; border-radius: 8px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #f2f2f2; }
 
-        /* --- FORMS --- */
-        .form-container { max-width: 500px; margin: 0 auto; background: white; padding: 2.5rem; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
-        .form-group { margin-bottom: 1.2rem; }
-        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem; }
-        .form-group input, .form-group select { width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 4px; font-size: 1rem; }
-        .form-group input:focus { border-color: #e74c3c; outline: none; }
-        .submit-btn { width: 100%; background: #e74c3c; color: white; border: none; padding: 1rem; font-size: 1rem; cursor: pointer; border-radius: 4px; font-weight: bold; transition: background 0.3s; }
-        .submit-btn:hover { background: #c0392b; }
-
-        /* --- FOOTER --- */
-        footer { background: #1a1a1a; color: #888; text-align: center; padding: 3rem 1rem; margin-top: 4rem; }
+        /* Modal Styles */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; }
+        .modal-content { background: white; padding: 30px; width: 400px; border-radius: 8px; position: relative; }
+        .close { float: right; cursor: pointer; font-size: 1.5em; }
+        input, select { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        
+        #otp-section { display: none; background: #e8f0fe; padding: 10px; border-radius: 4px; margin-top: 10px; }
     </style>
 </head>
 <body>
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PDC3P7SS"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
-    <div id="consent-banner" style="position:fixed; bottom:0; left:0; right:0; background:#000; color:#fff; padding:20px; text-align:center; z-index:9999; display:none;">
-    <p>We use cookies to analyze traffic and improve your experience.</p>
-    <div style="margin-top:10px;">
-        <button onclick="acceptConsent()" style="background:#e74c3c; color:fff; border:none; padding:10px 20px; cursor:pointer; margin-right:10px;">Accept All</button>
-        <button onclick="denyConsent()" style="background:#555; color:fff; border:none; padding:10px 20px; cursor:pointer;">Deny</button>
-    </div>
-</div>
 
-<script>
-    // Define the gtag function for consent
-    function gtag(){dataLayer.push(arguments);}
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PDC3P7S"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
-    // 1. Set Default Consent to DENIED (Privacy First)
-    gtag('consent', 'default', {
-        'ad_storage': 'denied',
-        'ad_user_data': 'denied',
-        'ad_personalization': 'denied',
-        'analytics_storage': 'denied',
-        'wait_for_update': 500
-    });
+    <nav>
+        <h1>MOTO-X</h1>
+        <div>
+            <a href="#" onclick="showHome()">Home</a>
+            <a href="#vehicles">Vehicles</a>
+            <a href="#compare" onclick="toggleCompare()">Compare Specs</a> <button class="btn" style="margin-left: 15px; font-size: 0.9em;" onclick="openModal()">Book Test Drive</button>
+        </div>
+    </nav>
 
-    // Check if user previously gave consent
-    if (!localStorage.getItem('consent_status')) {
-        document.getElementById('consent-banner').style.display = 'block';
-    } else if (localStorage.getItem('consent_status') === 'granted') {
-        gtag('consent', 'update', {
-            'ad_storage': 'granted',
-            'ad_user_data': 'granted',
-            'ad_personalization': 'granted',
-            'analytics_storage': 'granted'
-        });
-    }
-
-    // Function when user clicks "Accept"
-    function acceptConsent() {
-        gtag('consent', 'update', {
-            'ad_storage': 'granted',
-            'ad_user_data': 'granted',
-            'ad_personalization': 'granted',
-            'analytics_storage': 'granted'
-        });
-        
-        // Push event so GTM knows consent is updated
-        window.dataLayer.push({'event': 'consent_update'});
-        
-        localStorage.setItem('consent_status', 'granted');
-        document.getElementById('consent-banner').style.display = 'none';
-    }
-
-    // Function when user clicks "Deny"
-    function denyConsent() {
-        localStorage.setItem('consent_status', 'denied');
-        document.getElementById('consent-banner').style.display = 'none';
-    }
-</script>
-
-    <header>
-        <div class="logo">MOTO-X</div>
-        <nav>
-            <ul>
-                <li><a onclick="navigate('home')">Home</a></li>
-                <li><a onclick="navigate('listing')">Vehicles</a></li>
-                <li><a onclick="navigate('compare')">Compare</a></li>
-                <li><a onclick="navigate('dealer')">Dealers</a></li>
-                <li><a onclick="navigate('support')">Support</a></li>
-            </ul>
-        </nav>
-        <button onclick="navigate('test-drive')" class="cta-btn">Book Test Drive</button>
-    </header>
-
-    <section id="home" class="page-section active">
+    <div id="home-view">
         <div class="hero">
-            <h1>Experience the Thrill</h1>
+            <h2>Experience the Thrill</h2>
             <p>Discover our new range of performance bikes and city scooters.</p>
-            <button class="cta-btn" onclick="navigate('listing')">View All Models</button>
+            <a href="#vehicles" class="btn">View All Models</a>
         </div>
-        
-        <h2>Featured This Month</h2>
-        <div class="vehicle-grid">
-            <div class="vehicle-card">
-                <div class="card-img">
-                    <img src="https://images.unsplash.com/photo-1558981806-ec527fa84f3d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Thunder X1">
-                </div>
-                <div class="card-info">
-                    <h3>Thunder X1 (Bike)</h3>
-                    <p>Starts at $2,500</p>
-                    <div class="card-actions">
-                        <button class="btn-outline" onclick="loadVehicleDetail('Thunder X1', 'Bike')">View Details</button>
-                    </div>
-                </div>
-            </div>
-            <div class="vehicle-card">
-                <div class="card-img">
-                    <img src="https://images.unsplash.com/photo-1623019556843-c90666060c5a?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Scoot S-Pro">
-                </div>
-                <div class="card-info">
-                    <h3>Scoot S-Pro (Scooter)</h3>
-                    <p>Starts at $1,200</p>
-                    <div class="card-actions">
-                        <button class="btn-outline" onclick="loadVehicleDetail('Scoot S-Pro', 'Scooter')">View Details</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <section id="listing" class="page-section">
-        <h2>Our Vehicles</h2>
-        <div style="margin: 1.5rem 0;">
-            <button class="btn-outline">Filter: All</button>
-            <button class="btn-outline">Bikes</button>
-            <button class="btn-outline">Scooters</button>
-        </div>
-        <div class="vehicle-grid">
-            <div class="vehicle-card">
-                <div class="card-img">
-                    <img src="https://images.unsplash.com/photo-1558981806-ec527fa84f3d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Thunder X1">
-                </div>
-                <div class="card-info">
+        <div class="container" id="vehicles">
+            <h3>Featured This Month</h3>
+            <div class="grid">
+                <div class="card vehicle-card">
+                    <img src="https://via.placeholder.com/400x300?text=Thunder+X1" alt="Thunder X1">
                     <h3>Thunder X1</h3>
-                    <p>500cc | Urban Cruiser</p>
-                    <div class="card-actions">
-                        <button class="btn-outline" onclick="loadVehicleDetail('Thunder X1', 'Bike')">Explore</button>
-                        <button class="cta-btn" onclick="navigate('test-drive')">Book Ride</button>
-                    </div>
+                    <p>500cc | 6-Speed | ABS</p>
+                    <p class="price">$2,500</p>
+                    <button class="btn" onclick="loadVehicleDetail('Thunder X1', 'MOTO-500', 2500, 'Motorcycle')">View Details</button>
                 </div>
-            </div>
-            <div class="vehicle-card">
-                <div class="card-img">
-                    <img src="https://images.unsplash.com/photo-1623019556843-c90666060c5a?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Scoot S-Pro">
-                </div>
-                <div class="card-info">
+                <div class="card vehicle-card">
+                    <img src="https://via.placeholder.com/400x300?text=Scoot+S-Pro" alt="Scoot S-Pro">
                     <h3>Scoot S-Pro</h3>
-                    <p>125cc | Electric Start</p>
-                    <div class="card-actions">
-                        <button class="btn-outline" onclick="loadVehicleDetail('Scoot S-Pro', 'Scooter')">Explore</button>
-                        <button class="cta-btn" onclick="navigate('test-drive')">Book Ride</button>
-                    </div>
+                    <p>125cc | Automatic | Eco Mode</p>
+                    <p class="price">$1,200</p>
+                    <button class="btn" onclick="loadVehicleDetail('Scoot S-Pro', 'SCOOT-125', 1200, 'Scooter')">View Details</button>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <section id="detail" class="page-section">
-        <button class="btn-outline" onclick="navigate('listing')">← Back to Listing</button>
-        <div class="detail-layout">
-            <div class="detail-img">
-                <img src="https://images.unsplash.com/photo-1558981403-c5f9899a28bc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="Detail Shot">
-            </div>
-            <div class="detail-info">
-                <h1 id="detail-title">Vehicle Name</h1>
-                <div class="price">$2,500 Ex-Showroom</div>
-                <p>The ultimate machine for the open road. Features adaptive braking, LED lighting, and superior mileage for the modern rider.</p>
-                <br>
-                <button class="cta-btn" onclick="navigate('test-drive')">Book a Test Drive Now</button>
-                
-                <h3 style="margin-top:2rem;">Technical Specifications</h3>
-                <table class="spec-table">
-                    <tr><td><strong>Engine</strong></td><td>500cc Twin Cylinder</td></tr>
-                    <tr><td><strong>Power</strong></td><td>47 BHP @ 8500 rpm</td></tr>
-                    <tr><td><strong>Fuel Capacity</strong></td><td>15 Liters</td></tr>
-                    <tr><td><strong>Brakes</strong></td><td>Dual Channel ABS</td></tr>
-                    <tr><td><strong>Warranty</strong></td><td>5 Years / 50,000 km</td></tr>
+            <div id="compare-section">
+                <h3>Vehicle Comparison</h3>
+                <table>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Thunder X1</th>
+                        <th>Scoot S-Pro</th>
+                    </tr>
+                    <tr>
+                        <td>Engine</td>
+                        <td>500cc Twin</td>
+                        <td>125cc Single</td>
+                    </tr>
+                    <tr>
+                        <td>Transmission</td>
+                        <td>6-Speed Manual</td>
+                        <td>CVT Automatic</td>
+                    </tr>
+                    <tr>
+                        <td>Price</td>
+                        <td>$2,500</td>
+                        <td>$1,200</td>
+                    </tr>
                 </table>
             </div>
         </div>
-    </section>
+    </div>
 
-    <section id="compare" class="page-section">
-        <h2>Compare Models</h2>
-        <p style="margin-bottom:2rem; color:#666;">Compare features side-by-side to find your perfect ride.</p>
-        <div class="compare-container">
-            <div class="compare-col">
-                <h3>Thunder X1</h3>
-                <div class="card-img" style="height:150px; margin-bottom:1rem;">
-                    <img src="https://images.unsplash.com/photo-1558981806-ec527fa84f3d?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="X1">
+    <div id="leadModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h3 id="modalTitle">Book Test Drive</h3>
+            <form id="leadForm" onsubmit="handleFormSubmit(event)">
+                <input type="text" id="name" placeholder="Full Name" required>
+                <input type="email" id="email" placeholder="Email Address" required>
+                <input type="tel" id="phone" placeholder="Phone Number" required>
+                <select id="modelSelect">
+                    <option value="Thunder X1">Thunder X1</option>
+                    <option value="Scoot S-Pro">Scoot S-Pro</option>
+                </select>
+                
+                <div id="otp-section">
+                    <label style="font-size: 0.9em; color: #555;">Verification Code Sent!</label>
+                    <input type="text" id="otpInput" placeholder="Enter OTP (Use 1234)">
                 </div>
-                <p><strong>Price:</strong> $2,500</p>
-                <p><strong>Engine:</strong> 500cc</p>
-                <p><strong>Mileage:</strong> 25 kmpl</p>
-                <p><strong>ABS:</strong> Dual Channel</p>
-            </div>
-            <div class="compare-col">
-                <h3>Scoot S-Pro</h3>
-                <div class="card-img" style="height:150px; margin-bottom:1rem;">
-                    <img src="https://images.unsplash.com/photo-1623019556843-c90666060c5a?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="S-Pro">
-                </div>
-                <p><strong>Price:</strong> $1,200</p>
-                <p><strong>Engine:</strong> 125cc</p>
-                <p><strong>Mileage:</strong> 55 kmpl</p>
-                <p><strong>ABS:</strong> Single Channel</p>
-            </div>
-            <div class="compare-col" style="display:flex; align-items:center; justify-content:center; background:#f9f9f9; border:2px dashed #ddd; box-shadow:none;">
-                <button class="btn-outline">+ Add Vehicle</button>
-            </div>
-        </div>
-    </section>
 
-    <section id="dealer" class="page-section">
-        <h2>Find a Dealer Near You</h2>
-        <div class="form-group" style="max-width:400px; margin-top:1rem;">
-            <input type="text" placeholder="Enter Zip Code or City">
-        </div>
-        <div style="background:white; padding:1.5rem; border-radius:8px; margin-top:1rem; border-left: 5px solid #e74c3c; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
-            <h4>Downtown Motors</h4>
-            <p>123 Auto Avenue, Metro City, NY 10012</p>
-            <p>Contact: +1 800 555 0199</p>
-            <br>
-            <a href="#" style="color:#e74c3c; font-weight:bold;">Get Directions →</a>
-        </div>
-    </section>
-
-    <section id="test-drive" class="page-section">
-        <div class="form-container">
-            <h2 style="text-align:center;">Book a Test Drive</h2>
-            <p style="text-align:center; margin-bottom:2rem; color:#666;">Experience the ride before you buy.</p>
-            <form onsubmit="submitForm(event)">
-                <div class="form-group">
-                    <label>Select Vehicle</label>
-                    <select id="vehicle-select">
-                        <option>Thunder X1</option>
-                        <option>Scoot S-Pro</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" placeholder="John Doe" required>
-                </div>
-                <div class="form-group">
-                    <label>Phone Number</label>
-                    <input type="tel" placeholder="+1 234 567 8900" required>
-                </div>
-                <div class="form-group">
-                    <label>Preferred Date</label>
-                    <input type="date" required>
-                </div>
-                <button type="submit" class="submit-btn">Confirm Booking</button>
+                <button type="submit" id="submitBtn" class="btn" style="width: 100%;">Send Verification Code</button>
             </form>
         </div>
-    </section>
-
-    <section id="thank-you" class="page-section" style="text-align:center;">
-        <div style="margin-top: 100px;">
-            <div style="font-size:4rem; color:#27ae60; margin-bottom:1rem;">✓</div>
-            <h2>Booking Confirmed!</h2>
-            <p>Thank you for your interest in MOTO-X.</p>
-            <p>Our dealer will contact you shortly to confirm your test drive slot.</p>
-            <br><br>
-            <button class="btn-outline" onclick="navigate('home')">Return to Home</button>
-        </div>
-    </section>
-
-    <section id="support" class="page-section">
-        <h2>Customer Support</h2>
-        <p>Need help with service or parts? We are here for you.</p>
-        <div style="display:flex; gap:2rem; margin-top:2rem; flex-wrap:wrap;">
-            <div style="flex:1; min-width:250px; background:white; padding:2rem; text-align:center; border-radius:8px; box-shadow:0 2px 10px rgba(0,0,0,0.05);">
-                <h3>Service Booking</h3>
-                <p style="margin:1rem 0;">Schedule your regular maintenance online.</p>
-                <button class="btn-outline">Book Service</button>
-            </div>
-            <div style="flex:1; min-width:250px; background:white; padding:2rem; text-align:center; border-radius:8px; box-shadow:0 2px 10px rgba(0,0,0,0.05);">
-                <h3>Roadside Assistance</h3>
-                <p style="margin:1rem 0;">24/7 Breakdown Support</p>
-                <div style="font-size:1.2rem; font-weight:bold; color:#e74c3c;">1800-HELP-NOW</div>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="logo" style="margin-bottom:1rem;">MOTO-X</div>
-        <p>&copy; 2026 MOTO-X Automotive. All rights reserved.</p>
-        <div style="margin-top:1rem; font-size:0.8rem;">
-            <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
-        </div>
-    </footer>
+    </div>
 
     <script>
-        // Simple Router Function
-        function navigate(pageId) {
-            // Hide all sections
-            const sections = document.querySelectorAll('.page-section');
-            sections.forEach(sec => sec.classList.remove('active'));
-            
-            // Show target section
-            const target = document.getElementById(pageId);
-            if (target) {
-                target.classList.add('active');
-                window.scrollTo(0,0);
+        // --- 1. Navigation & Features ---
+        
+        function showHome() {
+            document.getElementById('home-view').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
+        function toggleCompare() {
+            var section = document.getElementById('compare-section');
+            if (section.style.display === 'none' || section.style.display === '') {
+                section.style.display = 'block';
+                // Track Comparison View
+                window.dataLayer.push({
+                    'event': 'compare_view',
+                    'compare_items': ['Thunder X1', 'Scoot S-Pro']
+                });
+                alert("Comparison Mode Activated! Scroll down to see table.");
+            } else {
+                section.style.display = 'none';
             }
         }
 
-        // --- UPDATED TRACKING FUNCTION 1 ---
-        // Simulate Loading Dynamic Data & Track View
-        function loadVehicleDetail(modelName, type) {
-            document.getElementById('detail-title').innerText = modelName;
-            
-            // Set price based on model logic
-            let price = (modelName.includes('X1')) ? 2500 : 1200;
-
-            // GA4 TRACKING: Push 'view_item' event
-            window.dataLayer.push({ ecommerce: null });  // Clear previous ecommerce object
+        function loadVehicleDetail(name, id, price, category) {
+            // Track View Item
             window.dataLayer.push({
                 'event': 'view_item',
                 'ecommerce': {
                     'currency': 'USD',
                     'value': price,
                     'items': [{
-                        'item_id': modelName.replace(/\s+/g, '_').toLowerCase(),
-                        'item_name': modelName,
-                        'item_category': type
+                        'item_id': id,
+                        'item_name': name,
+                        'item_category': category,
+                        'price': price
                     }]
                 }
             });
-
-            // Pre-select the vehicle in the test drive form
-            const selectBox = document.getElementById('vehicle-select');
-            if(selectBox) selectBox.value = modelName;
-
-            navigate('detail');
+            alert("Navigating to details for: " + name + "\n(Check GTM/Console for 'view_item' event)");
         }
 
-        // --- UPDATED TRACKING FUNCTION 2 ---
-        // Form Submission Simulation & Track Lead
-        function submitForm(e) {
-            e.preventDefault();
-            
-            const vehicleName = document.getElementById('vehicle-select').value;
-            
-            // GA4 TRACKING: Push 'generate_lead' event
-            window.dataLayer.push({ ecommerce: null });
-            window.dataLayer.push({
-                'event': 'generate_lead',
-                'ecommerce': {
-                    'currency': 'USD',
-                    'value': 500, // Assigned value for a lead
-                    'items': [{
-                        'item_id': vehicleName.replace(/\s+/g, '_').toLowerCase(),
-                        'item_name': vehicleName
-                    }]
-                },
-                'lead_type': 'test_drive_booking'
-            });
+        // --- 2. Lead Form & OTP Logic ---
 
-            console.log("Form Submitted");
-            navigate('thank-you');
+        let otpStep = 1; // 1 = Send OTP, 2 = Verify OTP
+
+        function openModal() {
+            document.getElementById('leadModal').style.display = 'flex';
+            // Reset Form State
+            otpStep = 1;
+            document.getElementById('otp-section').style.display = 'none';
+            document.getElementById('submitBtn').innerText = "Send Verification Code";
+            document.getElementById('otpInput').required = false;
+            
+            // Track Form Start
+            window.dataLayer.push({ 'event': 'form_start' });
+        }
+
+        function closeModal() {
+            document.getElementById('leadModal').style.display = 'none';
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+
+            // Step 1: User requests OTP
+            if (otpStep === 1) {
+                // Simulate sending SMS
+                otpStep = 2;
+                document.getElementById('otp-section').style.display = 'block';
+                document.getElementById('submitBtn').innerText = "Verify & Book Test Drive";
+                document.getElementById('otpInput').required = true;
+                
+                alert("OTP Sent to " + document.getElementById('phone').value + ". (Use code 1234)");
+                
+                // Track OTP Sent
+                window.dataLayer.push({
+                    'event': 'otp_sent',
+                    'phone_number': '***' // Don't send PII
+                });
+
+            // Step 2: User enters OTP
+            } else {
+                var enteredOTP = document.getElementById('otpInput').value;
+                if (enteredOTP === '1234') {
+                    // Success!
+                    
+                    // Track OTP Success
+                    window.dataLayer.push({ 'event': 'otp_verified' });
+                    
+                    // Track Lead
+                    window.dataLayer.push({
+                        'event': 'generate_lead',
+                        'ecommerce': {
+                            'currency': 'USD',
+                            'value': 500
+                        }
+                    });
+                    
+                    alert("Success! Test Drive Booked. (Lead Event Fired)");
+                    closeModal();
+                } else {
+                    alert("Invalid OTP! Please try again.");
+                    // Track OTP Failure
+                    window.dataLayer.push({ 'event': 'otp_failed' });
+                }
+            }
         }
     </script>
 </body>
-
 </html>
