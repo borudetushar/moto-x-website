@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MOTO-X | Journey to the Road</title>
@@ -97,6 +100,61 @@
     </style>
 </head>
 <body>
+    <div id="consent-banner" style="position:fixed; bottom:0; left:0; right:0; background:#000; color:#fff; padding:20px; text-align:center; z-index:9999; display:none;">
+    <p>We use cookies to analyze traffic and improve your experience.</p>
+    <div style="margin-top:10px;">
+        <button onclick="acceptConsent()" style="background:#e74c3c; color:fff; border:none; padding:10px 20px; cursor:pointer; margin-right:10px;">Accept All</button>
+        <button onclick="denyConsent()" style="background:#555; color:fff; border:none; padding:10px 20px; cursor:pointer;">Deny</button>
+    </div>
+</div>
+
+<script>
+    // Define the gtag function for consent
+    function gtag(){dataLayer.push(arguments);}
+
+    // 1. Set Default Consent to DENIED (Privacy First)
+    gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'analytics_storage': 'denied',
+        'wait_for_update': 500
+    });
+
+    // Check if user previously gave consent
+    if (!localStorage.getItem('consent_status')) {
+        document.getElementById('consent-banner').style.display = 'block';
+    } else if (localStorage.getItem('consent_status') === 'granted') {
+        gtag('consent', 'update', {
+            'ad_storage': 'granted',
+            'ad_user_data': 'granted',
+            'ad_personalization': 'granted',
+            'analytics_storage': 'granted'
+        });
+    }
+
+    // Function when user clicks "Accept"
+    function acceptConsent() {
+        gtag('consent', 'update', {
+            'ad_storage': 'granted',
+            'ad_user_data': 'granted',
+            'ad_personalization': 'granted',
+            'analytics_storage': 'granted'
+        });
+        
+        // Push event so GTM knows consent is updated
+        window.dataLayer.push({'event': 'consent_update'});
+        
+        localStorage.setItem('consent_status', 'granted');
+        document.getElementById('consent-banner').style.display = 'none';
+    }
+
+    // Function when user clicks "Deny"
+    function denyConsent() {
+        localStorage.setItem('consent_status', 'denied');
+        document.getElementById('consent-banner').style.display = 'none';
+    }
+</script>
 
     <header>
         <div class="logo">MOTO-X</div>
@@ -334,25 +392,62 @@
             }
         }
 
-        // Simulate Loading Dynamic Data
+        // --- UPDATED TRACKING FUNCTION 1 ---
+        // Simulate Loading Dynamic Data & Track View
         function loadVehicleDetail(modelName, type) {
             document.getElementById('detail-title').innerText = modelName;
             
-            // Pre-select the vehicle in the test drive form if user clicks "Book" from details
+            // Set price based on model logic
+            let price = (modelName.includes('X1')) ? 2500 : 1200;
+
+            // GA4 TRACKING: Push 'view_item' event
+            window.dataLayer.push({ ecommerce: null });  // Clear previous ecommerce object
+            window.dataLayer.push({
+                'event': 'view_item',
+                'ecommerce': {
+                    'currency': 'USD',
+                    'value': price,
+                    'items': [{
+                        'item_id': modelName.replace(/\s+/g, '_').toLowerCase(),
+                        'item_name': modelName,
+                        'item_category': type
+                    }]
+                }
+            });
+
+            // Pre-select the vehicle in the test drive form
             const selectBox = document.getElementById('vehicle-select');
-            selectBox.value = modelName;
+            if(selectBox) selectBox.value = modelName;
 
             navigate('detail');
         }
 
-        // Form Submission Simulation
+        // --- UPDATED TRACKING FUNCTION 2 ---
+        // Form Submission Simulation & Track Lead
         function submitForm(e) {
             e.preventDefault();
-            // In a real app, this would send data to a CRM/Backend
+            
+            const vehicleName = document.getElementById('vehicle-select').value;
+            
+            // GA4 TRACKING: Push 'generate_lead' event
+            window.dataLayer.push({ ecommerce: null });
+            window.dataLayer.push({
+                'event': 'generate_lead',
+                'ecommerce': {
+                    'currency': 'USD',
+                    'value': 500, // Assigned value for a lead
+                    'items': [{
+                        'item_id': vehicleName.replace(/\s+/g, '_').toLowerCase(),
+                        'item_name': vehicleName
+                    }]
+                },
+                'lead_type': 'test_drive_booking'
+            });
+
             console.log("Form Submitted");
             navigate('thank-you');
         }
     </script>
-
 </body>
+
 </html>
