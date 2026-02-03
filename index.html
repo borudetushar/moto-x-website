@@ -173,4 +173,119 @@
             document.getElementById('home-view').style.display = 'block';
             document.getElementById('detail-view').style.display = 'none';
             document.getElementById('compare-section').style.display = 'none'; 
-            window.scrollTo(0,
+            window.scrollTo(0, 0);
+        }
+
+        function toggleCompare() {
+            var section = document.getElementById('compare-section');
+            if (section.style.display === 'none' || section.style.display === '') {
+                section.style.display = 'block';
+                // Track Comparison View in GA4
+                window.dataLayer.push({
+                    'event': 'compare_view',
+                    'compare_items': ['Thunder X1', 'Scoot S-Pro']
+                });
+                setTimeout(function() {
+                    section.scrollIntoView({behavior: "smooth"});
+                }, 100);
+            } else {
+                section.style.display = 'none';
+            }
+        }
+
+        function loadVehicleDetail(name, id, price, category, imageUrl) {
+            // A. Update the User Interface
+            document.getElementById('home-view').style.display = 'none';
+            document.getElementById('detail-view').style.display = 'block';
+            
+            // Populate Data
+            document.getElementById('detail-title').innerText = name;
+            document.getElementById('detail-cat').innerText = category;
+            document.getElementById('detail-price').innerText = "$" + price.toLocaleString();
+            document.getElementById('detail-img').src = imageUrl; 
+            
+            window.scrollTo(0, 0);
+
+            // B. Send Data to Google Tag Manager
+            window.dataLayer.push({
+                'event': 'view_item',
+                'ecommerce': {
+                    'currency': 'USD',
+                    'value': price,
+                    'items': [{
+                        'item_id': id,
+                        'item_name': name,
+                        'item_category': category,
+                        'price': price
+                    }]
+                }
+            });
+        }
+
+        // --- 2. Lead Form & OTP Logic ---
+
+        let otpStep = 1; // 1 = Send OTP, 2 = Verify OTP
+
+        function openModal() {
+            document.getElementById('leadModal').style.display = 'flex';
+            // Reset Form State
+            otpStep = 1;
+            document.getElementById('otp-section').style.display = 'none';
+            document.getElementById('submitBtn').innerText = "Send Verification Code";
+            document.getElementById('submitBtn').style.background = "#ff4d4d";
+            document.getElementById('otpInput').required = false;
+            document.getElementById('otpInput').value = "";
+            
+            // Track Form Start
+            window.dataLayer.push({ 'event': 'form_start' });
+        }
+
+        function closeModal() {
+            document.getElementById('leadModal').style.display = 'none';
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+
+            // Step 1: User requests OTP
+            if (otpStep === 1) {
+                // UI Updates
+                otpStep = 2;
+                document.getElementById('otp-section').style.display = 'block';
+                document.getElementById('submitBtn').innerText = "Verify & Book Test Drive";
+                document.getElementById('submitBtn').style.background = "#28a745"; // Change color to green
+                document.getElementById('otpInput').required = true;
+                
+                // Track OTP Sent
+                window.dataLayer.push({
+                    'event': 'otp_sent',
+                    'phone_number': '***' 
+                });
+                
+                document.getElementById('otpInput').focus();
+
+            // Step 2: User enters OTP
+            } else {
+                var enteredOTP = document.getElementById('otpInput').value;
+                if (enteredOTP === '1234') {
+                    // Success!
+                    window.dataLayer.push({ 'event': 'otp_verified' });
+                    window.dataLayer.push({
+                        'event': 'generate_lead',
+                        'ecommerce': {
+                            'currency': 'USD',
+                            'value': 500
+                        }
+                    });
+                    
+                    alert("Test Drive Confirmed! \n(Lead Data sent to Google Analytics)");
+                    closeModal();
+                } else {
+                    alert("Incorrect OTP. Please enter '1234'");
+                    window.dataLayer.push({ 'event': 'otp_failed' });
+                }
+            }
+        }
+    </script>
+</body>
+</html>
