@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MOTO-X | Journey to the Road</title>
     
-    <script> window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    <script> 
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
         
-        // 1. Check if user has already made a choice
         if(localStorage.getItem('consentMode') === null) {
             // Default: Deny everything
             gtag('consent', 'default', {
@@ -69,6 +69,12 @@
         .dealer-card { border: 1px solid #ddd; padding: 15px; margin-top: 10px; border-radius: 5px; background: #f9f9f9; display: none; }
         .contact-box { text-align: center; padding: 20px; background: #f9f9f9; border-radius: 8px; margin-bottom: 20px; }
         .contact-box h3 { color: #ff4d4d; margin-bottom: 5px; }
+
+        /* CONSENT BANNER (Restored) */
+        #consent-banner { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(0, 0, 0, 0.9); color: white; padding: 20px; text-align: center; z-index: 9999; display: none; box-shadow: 0 -2px 10px rgba(0,0,0,0.2); }
+        .consent-btn { padding: 10px 20px; border: none; cursor: pointer; font-weight: bold; border-radius: 4px; margin: 0 10px; }
+        .btn-accept { background: #28a745; color: white; }
+        .btn-deny { background: #666; color: white; }
     </style>
 </head>
 <body>
@@ -95,12 +101,12 @@
                 <div class="card vehicle-card">
                     <img src="bike.jpg" alt="Thunder X1">
                     <h3>Thunder X1 (Bike)</h3><p>500cc | 6-Speed | ABS</p><p class="price">Starts at $2,500</p>
-                    <button class="btn" onclick="loadVehicleDetail('Thunder X1', 'MOTO-500', 2500, 'Motorcycle', 'bike.jpg')">View Details</button>
+                    <button class="btn" onclick="handleProductClick('Thunder X1', 'MOTO-500', 2500, 'Motorcycle', 'bike.jpg')">View Details</button>
                 </div>
                 <div class="card vehicle-card">
                     <img src="scooter.jpg" alt="Scoot S-Pro">
                     <h3>Scoot S-Pro (Scooter)</h3><p>125cc | Automatic | Eco Mode</p><p class="price">Starts at $1,200</p>
-                    <button class="btn" onclick="loadVehicleDetail('Scoot S-Pro', 'SCOOT-125', 1200, 'Scooter', 'scooter.jpg')">View Details</button>
+                    <button class="btn" onclick="handleProductClick('Scoot S-Pro', 'SCOOT-125', 1200, 'Scooter', 'scooter.jpg')">View Details</button>
                 </div>
             </div>
             <div id="compare-section">
@@ -142,29 +148,61 @@
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span><h3 id="modalTitle">Book Test Drive</h3>
             <form id="leadForm" onsubmit="handleFormSubmit(event)">
-                
-                <input type="text" id="name" placeholder="Full Name" required 
-                       oninput="trackFormStart()" 
-                       onchange="trackStep('Full Name')">
-                
-                <input type="email" id="email" placeholder="Email Address" required 
-                       onchange="trackStep('Email Address')">
-                
-                <input type="tel" id="phone" placeholder="Phone Number" required 
-                       onchange="trackStep('Phone Number')">
-                
+                <input type="text" id="name" placeholder="Full Name" required oninput="trackFormStart()" onchange="trackStep('Full Name')">
+                <input type="email" id="email" placeholder="Email Address" required onchange="trackStep('Email Address')">
+                <input type="tel" id="phone" placeholder="Phone Number" required onchange="trackStep('Phone Number')">
                 <select id="modelSelect"><option value="Thunder X1">Thunder X1</option><option value="Scoot S-Pro">Scoot S-Pro</option></select>
-                
                 <div id="otp-section"><label>Verification Code</label><p style="font-size:0.8em;">(Code: 1234)</p><input type="text" id="otpInput" placeholder="Enter OTP"></div>
                 <button type="submit" id="submitBtn" class="btn" style="width: 100%;">Send Verification Code</button>
             </form>
         </div>
     </div>
 
+    <div id="consent-banner">
+        <p><strong>We use cookies to improve your experience.</strong><br>Allow us to track analytics and personalize ads? (Consent Mode v2)</p>
+        <button class="consent-btn btn-accept" onclick="acceptConsent()">Accept All</button>
+        <button class="consent-btn btn-deny" onclick="denyConsent()">Deny All</button>
+    </div>
+
     <script>
-        // GLOBAL STORAGE
+        // --- 1. GLOBAL VARIABLES ---
         let currentVehicle = null; 
         let hasFormStarted = false;
+
+        // --- 2. INIT LOGIC (VIEW ITEM LIST - NEW) ---
+        // Fires automatically when page loads
+        window.addEventListener('load', function() {
+            // Show banner if no choice saved
+            if(localStorage.getItem('consentMode') === null) {
+                document.getElementById('consent-banner').style.display = 'block';
+            }
+
+            // Fire view_item_list
+            window.dataLayer.push({
+                'event': 'view_item_list',
+                'ecommerce': {
+                    'currency': 'USD',
+                    'items': [
+                        { 'item_id': 'MOTO-500', 'item_name': 'Thunder X1', 'price': 2500, 'item_category': 'Motorcycle' },
+                        { 'item_id': 'SCOOT-125', 'item_name': 'Scoot S-Pro', 'price': 1200, 'item_category': 'Scooter' }
+                    ]
+                }
+            });
+        });
+
+        // --- 3. CLICK & DETAIL LOGIC (SELECT ITEM - NEW) ---
+        function handleProductClick(name, id, price, category, imageUrl) {
+            // 1. Fire select_item event
+            window.dataLayer.push({
+                'event': 'select_item',
+                'ecommerce': {
+                    'currency': 'USD',
+                    'items': [{ 'item_id': id, 'item_name': name, 'item_category': category, 'price': price }]
+                }
+            });
+            // 2. Load Details
+            setTimeout(() => { loadVehicleDetail(name, id, price, category, imageUrl); }, 100);
+        }
 
         function loadVehicleDetail(name, id, price, category, imageUrl) {
             hideAllViews();
@@ -182,7 +220,7 @@
             });
         }
 
-        // NAVIGATION
+        // --- 4. NAVIGATION & DEALER TRACKING ---
         function hideAllViews() {
             document.getElementById('home-view').style.display = 'none';
             document.getElementById('detail-view').style.display = 'none';
@@ -191,13 +229,25 @@
             document.getElementById('compare-section').style.display = 'none';
         }
         function showHome() { hideAllViews(); document.getElementById('home-view').style.display = 'block'; }
-        function showDealers() { hideAllViews(); document.getElementById('dealers-view').style.display = 'block'; window.dataLayer.push({'event':'page_view','page_title':'Dealers'}); }
+        
+        function showDealers() { 
+            hideAllViews(); 
+            document.getElementById('dealers-view').style.display = 'block'; 
+            window.dataLayer.push({'event':'dealer_locate', 'page_title':'Dealers'}); 
+        }
+        
         function showSupport() { hideAllViews(); document.getElementById('support-view').style.display = 'block'; window.dataLayer.push({'event':'page_view','page_title':'Support'}); }
+        
         function filterDealers() {
             document.querySelectorAll('.dealer-card').forEach(d => d.style.display = 'none');
             var city = document.getElementById('citySelect').value;
-            if (city) document.getElementById('dealer-' + city).style.display = 'block';
+            if (city) {
+                document.getElementById('dealer-' + city).style.display = 'block';
+                // New Event: dealer_select
+                window.dataLayer.push({'event': 'dealer_select', 'city_id': city});
+            }
         }
+        
         function toggleCompare() {
             var section = document.getElementById('compare-section');
             if (section.style.display === 'none') {
@@ -207,21 +257,23 @@
             } else { section.style.display = 'none'; }
         }
 
-        // --- TRACKING LOGIC ---
-        function trackFormStart() {
-            if (!hasFormStarted) {
-                window.dataLayer.push({ 'event': 'form_start' }); 
-                hasFormStarted = true; 
-            }
+        // --- 5. CONSENT FUNCTIONS (RESTORED) ---
+        function acceptConsent() {
+            var consentState = { 'ad_storage': 'granted', 'analytics_storage': 'granted', 'ad_user_data': 'granted', 'ad_personalization': 'granted' };
+            gtag('consent', 'update', consentState);
+            localStorage.setItem('consentMode', JSON.stringify(consentState));
+            document.getElementById('consent-banner').style.display = 'none';
         }
 
-        function trackStep(fieldName) {
-            // Fires when user finishes a field
-            window.dataLayer.push({
-                'event': 'form_step_complete',
-                'step_name': fieldName
-            });
+        function denyConsent() {
+            var consentState = { 'ad_storage': 'denied', 'analytics_storage': 'denied', 'ad_user_data': 'denied', 'ad_personalization': 'denied' };
+            localStorage.setItem('consentMode', JSON.stringify(consentState));
+            document.getElementById('consent-banner').style.display = 'none';
         }
+
+        // --- 6. FORM LOGIC ---
+        function trackFormStart() { if (!hasFormStarted) { window.dataLayer.push({ 'event': 'form_start' }); hasFormStarted = true; } }
+        function trackStep(fieldName) { window.dataLayer.push({ 'event': 'form_step_complete', 'step_name': fieldName }); }
 
         let otpStep = 1;
         function openModal() {
@@ -231,9 +283,7 @@
             document.getElementById('submitBtn').innerText = "Send Verification Code";
             document.getElementById('submitBtn').style.background = "#ff4d4d";
             document.getElementById('otpInput').required = false;
-            document.getElementById('name').value = ""; 
-            document.getElementById('email').value = ""; 
-            document.getElementById('phone').value = ""; 
+            document.getElementById('name').value = ""; document.getElementById('email').value = ""; document.getElementById('phone').value = ""; 
         }
         function closeModal() { document.getElementById('leadModal').style.display = 'none'; }
 
@@ -245,21 +295,18 @@
                 document.getElementById('submitBtn').innerText = "Verify & Book Test Drive";
                 document.getElementById('submitBtn').style.background = "#28a745"; 
                 document.getElementById('otpInput').required = true;
-                
                 window.dataLayer.push({ 'event': 'otp_sent' }); 
                 document.getElementById('otpInput').focus();
             } else {
                 if (document.getElementById('otpInput').value === '1234') {
-                    
-                    window.dataLayer.push({
-                        'event': 'generate_lead',
-                        'ecommerce': {
-                            'currency': 'USD',
+                    window.dataLayer.push({ 
+                        'event': 'generate_lead', 
+                        'ecommerce': { 
+                            'currency': 'USD', 
                             'value': currentVehicle ? currentVehicle.price : 0, 
                             'items': currentVehicle ? [currentVehicle] : [] 
-                        }
+                        } 
                     });
-
                     window.dataLayer.push({ 'event': 'otp_verified' });
                     alert("Test Drive Confirmed!");
                     closeModal();
@@ -272,4 +319,3 @@
     </script>
 </body>
 </html>
-
