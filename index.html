@@ -115,10 +115,19 @@
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span><h3 id="modalTitle">Book Test Drive</h3>
             <form id="leadForm" onsubmit="handleFormSubmit(event)">
-                <input type="text" id="name" placeholder="Full Name" required oninput="trackFormStart()">
-                <input type="email" id="email" placeholder="Email Address" required>
-                <input type="tel" id="phone" placeholder="Phone Number" required>
+                
+                <input type="text" id="name" placeholder="Full Name" required 
+                       oninput="trackFormStart()" 
+                       onchange="trackStep('Full Name')">
+                
+                <input type="email" id="email" placeholder="Email Address" required 
+                       onchange="trackStep('Email Address')">
+                
+                <input type="tel" id="phone" placeholder="Phone Number" required 
+                       onchange="trackStep('Phone Number')">
+                
                 <select id="modelSelect"><option value="Thunder X1">Thunder X1</option><option value="Scoot S-Pro">Scoot S-Pro</option></select>
+                
                 <div id="otp-section"><label>Verification Code</label><p style="font-size:0.8em;">(Code: 1234)</p><input type="text" id="otpInput" placeholder="Enter OTP"></div>
                 <button type="submit" id="submitBtn" class="btn" style="width: 100%;">Send Verification Code</button>
             </form>
@@ -126,7 +135,7 @@
     </div>
 
     <script>
-        // GLOBAL STORAGE FOR SELECTED VEHICLE
+        // GLOBAL STORAGE
         let currentVehicle = null; 
         let hasFormStarted = false;
 
@@ -139,23 +148,10 @@
             document.getElementById('detail-img').src = imageUrl; 
             window.scrollTo(0, 0);
 
-            // 1. Save data globally for later use in the form
-            currentVehicle = {
-                'item_id': id,
-                'item_name': name,
-                'item_category': category,
-                'price': price,
-                'quantity': 1
-            };
-
-            // 2. Fire View Item Event
+            currentVehicle = { 'item_id': id, 'item_name': name, 'item_category': category, 'price': price, 'quantity': 1 };
             window.dataLayer.push({
                 'event': 'view_item',
-                'ecommerce': {
-                    'currency': 'USD',
-                    'value': price,
-                    'items': [currentVehicle]
-                }
+                'ecommerce': { 'currency': 'USD', 'value': price, 'items': [currentVehicle] }
             });
         }
 
@@ -184,12 +180,20 @@
             } else { section.style.display = 'none'; }
         }
 
-        // FORM LOGIC
+        // --- NEW TRACKING LOGIC ---
         function trackFormStart() {
             if (!hasFormStarted) {
-                window.dataLayer.push({ 'event': 'form_start' });
+                window.dataLayer.push({ 'event': 'form_start' }); // Funnel Step 1
                 hasFormStarted = true; 
             }
+        }
+
+        function trackStep(fieldName) {
+            // Fires when user finishes a field (onchange)
+            window.dataLayer.push({
+                'event': 'form_step_complete',
+                'step_name': fieldName
+            });
         }
 
         let otpStep = 1;
@@ -201,6 +205,8 @@
             document.getElementById('submitBtn').style.background = "#ff4d4d";
             document.getElementById('otpInput').required = false;
             document.getElementById('name').value = ""; 
+            document.getElementById('email').value = ""; 
+            document.getElementById('phone').value = ""; 
         }
         function closeModal() { document.getElementById('leadModal').style.display = 'none'; }
 
@@ -212,12 +218,12 @@
                 document.getElementById('submitBtn').innerText = "Verify & Book Test Drive";
                 document.getElementById('submitBtn').style.background = "#28a745"; 
                 document.getElementById('otpInput').required = true;
-                window.dataLayer.push({ 'event': 'otp_sent' });
+                
+                window.dataLayer.push({ 'event': 'otp_sent' }); // Funnel Step 4
                 document.getElementById('otpInput').focus();
             } else {
                 if (document.getElementById('otpInput').value === '1234') {
                     
-                    // THIS IS THE FIX: Passing the 'items' array with the Lead event
                     window.dataLayer.push({
                         'event': 'generate_lead',
                         'ecommerce': {
@@ -227,15 +233,4 @@
                         }
                     });
 
-                    window.dataLayer.push({ 'event': 'otp_verified' });
-                    alert("Test Drive Confirmed!");
-                    closeModal();
-                } else {
-                    alert("Incorrect OTP");
-                    window.dataLayer.push({ 'event': 'otp_failed' });
-                }
-            }
-        }
-    </script>
-</body>
-</html>
+                    window.dataLayer.push({ 'event': 'otp_verified' }); // Funnel Step 5
