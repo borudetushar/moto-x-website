@@ -234,3 +234,14 @@
                     });
 
                     window.dataLayer.push({ 'event': 'otp_verified' }); // Funnel Step 5
+                    alert("Test Drive Confirmed!");
+                    closeModal();
+                } else {
+                    alert("Incorrect OTP");
+                    window.dataLayer.push({ 'event': 'otp_failed' });
+                }
+            }
+        }
+    </script>
+</body>
+</html>
