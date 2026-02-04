@@ -18,7 +18,9 @@
         body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; background: #f4f4f4; color: #333; }
         nav { background: #111; padding: 15px; color: white; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
         nav h1 { margin: 0; color: #ff4d4d; letter-spacing: 2px; }
+        nav div { display: flex; align-items: center; } /* Aligns links and button */
         nav a { color: white; text-decoration: none; margin: 0 15px; font-weight: 500; cursor: pointer; }
+        nav a:hover { color: #ff4d4d; }
         
         .hero { background: #333; color: white; padding: 100px 20px; text-align: center; }
         .hero h2 { font-size: 3em; margin: 0; }
@@ -63,8 +65,11 @@
         <div>
             <a onclick="showHome()">Home</a>
             <a onclick="showHome()">Vehicles</a>
-            <a onclick="toggleCompare()">Compare Specs</a>
-            <button class="btn" style="margin-left: 15px; font-size: 0.9em;" onclick="openModal()">Book Test Drive</button>
+            <a onclick="toggleCompare()">Compare</a>
+            <a href="#">Dealers</a>
+            <a href="#">Support</a>
+            
+            <button class="btn" style="margin-left: 15px; font-size: 0.9em; margin-top: 0;" onclick="openModal()">Book Test Drive</button>
         </div>
     </nav>
 
@@ -79,18 +84,18 @@
             <h3>Featured This Month</h3>
             <div class="grid">
                 <div class="card vehicle-card">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Kawasaki_Ninja_300_Special_Edition_%282014%29.jpg/640px-Kawasaki_Ninja_300_Special_Edition_%282014%29.jpg" alt="Thunder X1">
-                    <h3>Thunder X1</h3>
+                    <img src="bike.jpg" alt="Thunder X1">
+                    <h3>Thunder X1 (Bike)</h3>
                     <p>500cc | 6-Speed | ABS</p>
-                    <p class="price">$2,500</p>
-                    <button class="btn" onclick="loadVehicleDetail('Thunder X1', 'MOTO-500', 2500, 'Motorcycle', 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Kawasaki_Ninja_300_Special_Edition_%282014%29.jpg/640px-Kawasaki_Ninja_300_Special_Edition_%282014%29.jpg')">View Details</button>
+                    <p class="price">Starts at $2,500</p>
+                    <button class="btn" onclick="loadVehicleDetail('Thunder X1', 'MOTO-500', 2500, 'Motorcycle', 'bike.jpg')">View Details</button>
                 </div>
                 <div class="card vehicle-card">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Vespa_GTS_300_ie_Super_front-right_2013-08-10.jpg/640px-Vespa_GTS_300_ie_Super_front-right_2013-08-10.jpg" alt="Scoot S-Pro">
-                    <h3>Scoot S-Pro</h3>
+                    <img src="scooter.jpg" alt="Scoot S-Pro">
+                    <h3>Scoot S-Pro (Scooter)</h3>
                     <p>125cc | Automatic | Eco Mode</p>
-                    <p class="price">$1,200</p>
-                    <button class="btn" onclick="loadVehicleDetail('Scoot S-Pro', 'SCOOT-125', 1200, 'Scooter', 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Vespa_GTS_300_ie_Super_front-right_2013-08-10.jpg/640px-Vespa_GTS_300_ie_Super_front-right_2013-08-10.jpg')">View Details</button>
+                    <p class="price">Starts at $1,200</p>
+                    <button class="btn" onclick="loadVehicleDetail('Scoot S-Pro', 'SCOOT-125', 1200, 'Scooter', 'scooter.jpg')">View Details</button>
                 </div>
             </div>
 
@@ -187,7 +192,6 @@
                     'compare_items': ['Thunder X1', 'Scoot S-Pro']
                 });
                 
-                // Smooth scroll to comparison
                 setTimeout(function() {
                     section.scrollIntoView({behavior: "smooth"});
                 }, 100);
