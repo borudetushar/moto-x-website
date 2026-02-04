@@ -35,17 +35,13 @@
         .card img { width: 100%; height: 250px; object-fit: cover; border-radius: 5px; background: #eee; }
         .price { color: #ff4d4d; font-weight: bold; font-size: 1.2em; margin: 10px 0; }
 
-        /* Detail View Styles */
         #detail-view, #dealers-view, #support-view { display: none; background: white; padding: 40px; border-radius: 8px; max-width: 900px; margin: 40px auto; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         #detail-img { width: 100%; height: 400px; object-fit: cover; border-radius: 8px; }
-        
-        /* Comparison Section Styles */
         #compare-section { display: none; background: white; padding: 40px; margin-top: 40px; border-radius: 8px; }
         table { width: 100%; border-collapse: collapse; margin-top: 20px; }
         th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
         th { background-color: #f2f2f2; }
 
-        /* Modal Styles */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 200; backdrop-filter: blur(5px); }
         .modal-content { background: white; padding: 30px; width: 400px; border-radius: 8px; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
         .close { float: right; cursor: pointer; font-size: 1.5em; color: #999; }
@@ -53,15 +49,12 @@
         input, select { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
         
         #otp-section { display: none; background: #e8f0fe; padding: 15px; border-radius: 4px; margin-top: 10px; border: 1px solid #b3d7ff; }
-
-        /* Dealer & Support Specific Styles */
         .dealer-card { border: 1px solid #ddd; padding: 15px; margin-top: 10px; border-radius: 5px; background: #f9f9f9; display: none; }
         .contact-box { text-align: center; padding: 20px; background: #f9f9f9; border-radius: 8px; margin-bottom: 20px; }
         .contact-box h3 { color: #ff4d4d; margin-bottom: 5px; }
     </style>
 </head>
 <body>
-
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PDC3P7SS"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
@@ -73,7 +66,6 @@
             <a onclick="toggleCompare()">Compare</a>
             <a onclick="showDealers()">Dealers</a>
             <a onclick="showSupport()">Support</a>
-            
             <button class="btn" style="margin-left: 15px; font-size: 0.9em; margin-top: 0;" onclick="openModal()">Book Test Drive</button>
         </div>
     </nav>
@@ -84,7 +76,6 @@
             <p>Discover our new range of performance bikes and city scooters.</p>
             <a href="#vehicles" class="btn">View All Models</a>
         </div>
-
         <div class="container" id="vehicles">
             <h3>Featured This Month</h3>
             <div class="grid">
@@ -103,30 +94,13 @@
                     <button class="btn" onclick="loadVehicleDetail('Scoot S-Pro', 'SCOOT-125', 1200, 'Scooter', 'scooter.jpg')">View Details</button>
                 </div>
             </div>
-
             <div id="compare-section">
                 <h3>Vehicle Comparison</h3>
                 <table>
-                    <tr>
-                        <th>Feature</th>
-                        <th>Thunder X1</th>
-                        <th>Scoot S-Pro</th>
-                    </tr>
-                    <tr>
-                        <td>Engine</td>
-                        <td>500cc Twin</td>
-                        <td>125cc Single</td>
-                    </tr>
-                    <tr>
-                        <td>Transmission</td>
-                        <td>6-Speed Manual</td>
-                        <td>CVT Automatic</td>
-                    </tr>
-                    <tr>
-                        <td>Price</td>
-                        <td>$2,500</td>
-                        <td>$1,200</td>
-                    </tr>
+                    <tr><th>Feature</th><th>Thunder X1</th><th>Scoot S-Pro</th></tr>
+                    <tr><td>Engine</td><td>500cc Twin</td><td>125cc Single</td></tr>
+                    <tr><td>Transmission</td><td>6-Speed Manual</td><td>CVT Automatic</td></tr>
+                    <tr><td>Price</td><td>$2,500</td><td>$1,200</td></tr>
                 </table>
             </div>
         </div>
@@ -140,12 +114,7 @@
                 <h2 id="detail-title" style="font-size: 2.5em; margin-bottom: 10px; margin-top: 0;"></h2>
                 <p id="detail-cat" style="color: #666; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;"></p>
                 <p class="price" id="detail-price" style="font-size: 2em;"></p>
-                <p style="line-height: 1.6;">Experience the ultimate ride with our latest technology. This model features advanced ABS braking, a digital dashboard, and premium suspension for the smoothest ride on the road.</p>
-                <ul style="margin: 20px 0; padding-left: 20px; line-height: 1.8;">
-                    <li>Premium Alloy Wheels</li>
-                    <li>3-Year Warranty included</li>
-                    <li>24/7 Roadside Assistance</li>
-                </ul>
+                <p style="line-height: 1.6;">Experience the ultimate ride with our latest technology.</p>
                 <button class="btn" onclick="openModal()">Book Test Drive Now</button>
             </div>
         </div>
@@ -153,91 +122,63 @@
 
     <div id="dealers-view">
         <h2 style="margin-top: 0;">Find a MOTO-X Dealer</h2>
-        <p>Locate the nearest showroom to experience our vehicles.</p>
-        
-        <label for="citySelect" style="font-weight: bold;">Select Your City:</label>
         <select id="citySelect" onchange="filterDealers()">
             <option value="">-- Choose City --</option>
             <option value="ny">New York, NY</option>
             <option value="la">Los Angeles, CA</option>
             <option value="ch">Chicago, IL</option>
         </select>
-
-        <div id="dealer-ny" class="dealer-card">
-            <h3>MOTO-X New York Downtown</h3>
-            <p>123 Broadway Ave, NY 10001</p>
-            <p>Phone: (212) 555-0199</p>
-            <button class="btn" style="font-size: 0.9em; padding: 5px 15px;" onclick="alert('Directions sent to your phone!')">Get Directions</button>
-        </div>
-
-        <div id="dealer-la" class="dealer-card">
-            <h3>MOTO-X Santa Monica</h3>
-            <p>450 Ocean Blvd, Santa Monica, CA 90401</p>
-            <p>Phone: (310) 555-0122</p>
-            <button class="btn" style="font-size: 0.9em; padding: 5px 15px;" onclick="alert('Directions sent to your phone!')">Get Directions</button>
-        </div>
-
-        <div id="dealer-ch" class="dealer-card">
-            <h3>MOTO-X Chicago Loop</h3>
-            <p>78 Michigan Ave, Chicago, IL 60601</p>
-            <p>Phone: (312) 555-0888</p>
-            <button class="btn" style="font-size: 0.9em; padding: 5px 15px;" onclick="alert('Directions sent to your phone!')">Get Directions</button>
-        </div>
+        <div id="dealer-ny" class="dealer-card"><h3>MOTO-X New York</h3><p>123 Broadway Ave</p></div>
+        <div id="dealer-la" class="dealer-card"><h3>MOTO-X Santa Monica</h3><p>450 Ocean Blvd</p></div>
+        <div id="dealer-ch" class="dealer-card"><h3>MOTO-X Chicago</h3><p>78 Michigan Ave</p></div>
     </div>
 
     <div id="support-view">
         <h2 style="margin-top: 0;">Customer Support</h2>
-        <p>We are here to help you with any questions or service needs.</p>
-        
         <div class="grid" style="grid-template-columns: 1fr 1fr; margin-top: 30px;">
-            <div class="contact-box">
-                <h3>📞 Call Us</h3>
-                <p style="font-size: 1.2em; font-weight: bold;">+1 (800) MOTO-HELP</p>
-                <p>Mon-Fri, 9am - 6pm EST</p>
-            </div>
-            <div class="contact-box">
-                <h3>✉️ Email Us</h3>
-                <p style="font-size: 1.2em; font-weight: bold;">support@moto-x.com</p>
-                <p>We respond within 24 hours.</p>
-            </div>
+            <div class="contact-box"><h3>📞 Call Us</h3><p>+1 (800) MOTO-HELP</p></div>
+            <div class="contact-box"><h3>✉️ Email Us</h3><p>support@moto-x.com</p></div>
         </div>
-
-        <h3>Frequently Asked Questions</h3>
-        <ul style="line-height: 1.8;">
-            <li><strong>How do I book a service?</strong> - Call your nearest dealer directly.</li>
-            <li><strong>What is the warranty period?</strong> - All vehicles come with a 3-year standard warranty.</li>
-            <li><strong>Where can I find spare parts?</strong> - Visit any authorized MOTO-X service center.</li>
-        </ul>
     </div>
 
     <div id="leadModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            <h3 id="modalTitle" style="margin-top: 0;">Book Test Drive</h3>
-            <p style="font-size: 0.9em; color: #666;">Complete the form below to schedule your ride.</p>
+            <h3 id="modalTitle">Book Test Drive</h3>
             <form id="leadForm" onsubmit="handleFormSubmit(event)">
-                <input type="text" id="name" placeholder="Full Name" required>
+                <input type="text" id="name" placeholder="Full Name" required oninput="trackFormStart()">
+                
                 <input type="email" id="email" placeholder="Email Address" required>
                 <input type="tel" id="phone" placeholder="Phone Number" required>
                 <select id="modelSelect">
                     <option value="Thunder X1">Thunder X1</option>
                     <option value="Scoot S-Pro">Scoot S-Pro</option>
                 </select>
-                
                 <div id="otp-section">
-                    <label style="font-size: 0.9em; color: #333; font-weight: bold;">Enter Verification Code</label>
-                    <p style="font-size: 0.8em; color: #666; margin: 5px 0;">(Check your 'phone' for code: 1234)</p>
+                    <label>Enter Verification Code</label>
+                    <p style="font-size: 0.8em; color: #666;">(Code: 1234)</p>
                     <input type="text" id="otpInput" placeholder="Enter OTP">
                 </div>
-
                 <button type="submit" id="submitBtn" class="btn" style="width: 100%;">Send Verification Code</button>
             </form>
         </div>
     </div>
 
     <script>
-        // --- 1. Navigation Logic (Updated for Dealers & Support) ---
+        // --- TRACKING LOGIC ---
         
+        let hasFormStarted = false; // Flag to ensure one event per session
+
+        function trackFormStart() {
+            if (!hasFormStarted) {
+                window.dataLayer.push({ 'event': 'form_start' });
+                hasFormStarted = true; // Lock it so it doesn't fire again
+                console.log("Form Interaction Started - Event Fired");
+            }
+        }
+
+        // --- NAVIGATION & APP LOGIC ---
+
         function hideAllViews() {
             document.getElementById('home-view').style.display = 'none';
             document.getElementById('detail-view').style.display = 'none';
@@ -246,134 +187,71 @@
             document.getElementById('compare-section').style.display = 'none';
         }
 
-        function showHome() {
-            hideAllViews();
-            document.getElementById('home-view').style.display = 'block';
-            window.scrollTo(0, 0);
-        }
-
-        function showDealers() {
-            hideAllViews();
-            document.getElementById('dealers-view').style.display = 'block';
-            window.dataLayer.push({ 'event': 'page_view', 'page_title': 'Dealers' });
-        }
-
-        function showSupport() {
-            hideAllViews();
-            document.getElementById('support-view').style.display = 'block';
-            window.dataLayer.push({ 'event': 'page_view', 'page_title': 'Support' });
-        }
+        function showHome() { hideAllViews(); document.getElementById('home-view').style.display = 'block'; }
+        function showDealers() { hideAllViews(); document.getElementById('dealers-view').style.display = 'block'; window.dataLayer.push({ 'event': 'page_view', 'page_title': 'Dealers' }); }
+        function showSupport() { hideAllViews(); document.getElementById('support-view').style.display = 'block'; window.dataLayer.push({ 'event': 'page_view', 'page_title': 'Support' }); }
 
         function filterDealers() {
-            // Reset all
-            document.getElementById('dealer-ny').style.display = 'none';
-            document.getElementById('dealer-la').style.display = 'none';
-            document.getElementById('dealer-ch').style.display = 'none';
-            
-            // Show selected
+            document.querySelectorAll('.dealer-card').forEach(d => d.style.display = 'none');
             var city = document.getElementById('citySelect').value;
-            if (city) {
-                document.getElementById('dealer-' + city).style.display = 'block';
-            }
+            if (city) document.getElementById('dealer-' + city).style.display = 'block';
         }
 
         function toggleCompare() {
             var section = document.getElementById('compare-section');
-            if (section.style.display === 'none' || section.style.display === '') {
+            if (section.style.display === 'none') {
                 section.style.display = 'block';
-                // Track Comparison
-                window.dataLayer.push({
-                    'event': 'compare_view',
-                    'compare_items': ['Thunder X1', 'Scoot S-Pro']
-                });
-                setTimeout(function() {
-                    section.scrollIntoView({behavior: "smooth"});
-                }, 100);
-            } else {
-                section.style.display = 'none';
-            }
+                window.dataLayer.push({ 'event': 'compare_view', 'compare_items': ['Thunder X1', 'Scoot S-Pro'] });
+                section.scrollIntoView({behavior: "smooth"});
+            } else { section.style.display = 'none'; }
         }
 
         function loadVehicleDetail(name, id, price, category, imageUrl) {
             hideAllViews();
             document.getElementById('detail-view').style.display = 'block';
-            
-            // Populate Data
             document.getElementById('detail-title').innerText = name;
             document.getElementById('detail-cat').innerText = category;
             document.getElementById('detail-price').innerText = "$" + price.toLocaleString();
             document.getElementById('detail-img').src = imageUrl; 
-            
             window.scrollTo(0, 0);
-
-            // Send Data to Google Tag Manager
             window.dataLayer.push({
                 'event': 'view_item',
-                'ecommerce': {
-                    'currency': 'USD',
-                    'value': price,
-                    'items': [{
-                        'item_id': id,
-                        'item_name': name,
-                        'item_category': category,
-                        'price': price
-                    }]
-                }
+                'ecommerce': { 'currency': 'USD', 'value': price, 'items': [{ 'item_id': id, 'item_name': name, 'item_category': category, 'price': price }] }
             });
         }
 
-        // --- 2. Lead Form & OTP Logic ---
-
+        // --- FORM & OTP LOGIC ---
         let otpStep = 1;
-
         function openModal() {
             document.getElementById('leadModal').style.display = 'flex';
             otpStep = 1;
+            hasFormStarted = false; // Reset tracking for new attempt
             document.getElementById('otp-section').style.display = 'none';
             document.getElementById('submitBtn').innerText = "Send Verification Code";
             document.getElementById('submitBtn').style.background = "#ff4d4d";
             document.getElementById('otpInput').required = false;
-            document.getElementById('otpInput').value = "";
-            window.dataLayer.push({ 'event': 'form_start' });
+            document.getElementById('name').value = ""; // Clear form
         }
-
-        function closeModal() {
-            document.getElementById('leadModal').style.display = 'none';
-        }
+        function closeModal() { document.getElementById('leadModal').style.display = 'none'; }
 
         function handleFormSubmit(e) {
             e.preventDefault();
-
             if (otpStep === 1) {
                 otpStep = 2;
                 document.getElementById('otp-section').style.display = 'block';
                 document.getElementById('submitBtn').innerText = "Verify & Book Test Drive";
                 document.getElementById('submitBtn').style.background = "#28a745"; 
                 document.getElementById('otpInput').required = true;
-                
-                window.dataLayer.push({
-                    'event': 'otp_sent',
-                    'phone_number': '***' 
-                });
-                
+                window.dataLayer.push({ 'event': 'otp_sent', 'phone_number': '***' });
                 document.getElementById('otpInput').focus();
-
             } else {
-                var enteredOTP = document.getElementById('otpInput').value;
-                if (enteredOTP === '1234') {
+                if (document.getElementById('otpInput').value === '1234') {
                     window.dataLayer.push({ 'event': 'otp_verified' });
-                    window.dataLayer.push({
-                        'event': 'generate_lead',
-                        'ecommerce': {
-                            'currency': 'USD',
-                            'value': 500
-                        }
-                    });
-                    
-                    alert("Test Drive Confirmed! \n(Lead Data sent to Google Analytics)");
+                    window.dataLayer.push({ 'event': 'generate_lead', 'ecommerce': { 'currency': 'USD', 'value': 500 } });
+                    alert("Test Drive Confirmed!");
                     closeModal();
                 } else {
-                    alert("Incorrect OTP. Please enter '1234'");
+                    alert("Incorrect OTP");
                     window.dataLayer.push({ 'event': 'otp_failed' });
                 }
             }
