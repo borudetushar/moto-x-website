@@ -55,7 +55,7 @@
 </head>
 <body>
 
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PDC3P7S"
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PDC3P7SS"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <nav>
@@ -79,18 +79,18 @@
             <h3>Featured This Month</h3>
             <div class="grid">
                 <div class="card vehicle-card">
-                    <img src="https://via.placeholder.com/600x400/ff4d4d/ffffff?text=Thunder+X1+(Motorcycle)" alt="Thunder X1">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Kawasaki_Ninja_300_Special_Edition_%282014%29.jpg/640px-Kawasaki_Ninja_300_Special_Edition_%282014%29.jpg" alt="Thunder X1">
                     <h3>Thunder X1</h3>
                     <p>500cc | 6-Speed | ABS</p>
                     <p class="price">$2,500</p>
-                    <button class="btn" onclick="loadVehicleDetail('Thunder X1', 'MOTO-500', 2500, 'Motorcycle', 'https://via.placeholder.com/800x500/ff4d4d/ffffff?text=Thunder+X1+(Motorcycle)')">View Details</button>
+                    <button class="btn" onclick="loadVehicleDetail('Thunder X1', 'MOTO-500', 2500, 'Motorcycle', 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Kawasaki_Ninja_300_Special_Edition_%282014%29.jpg/640px-Kawasaki_Ninja_300_Special_Edition_%282014%29.jpg')">View Details</button>
                 </div>
                 <div class="card vehicle-card">
-                    <img src="https://via.placeholder.com/600x400/333333/ffffff?text=Scoot+S-Pro+(Scooter)" alt="Scoot S-Pro">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Vespa_GTS_300_ie_Super_front-right_2013-08-10.jpg/640px-Vespa_GTS_300_ie_Super_front-right_2013-08-10.jpg" alt="Scoot S-Pro">
                     <h3>Scoot S-Pro</h3>
                     <p>125cc | Automatic | Eco Mode</p>
                     <p class="price">$1,200</p>
-                    <button class="btn" onclick="loadVehicleDetail('Scoot S-Pro', 'SCOOT-125', 1200, 'Scooter', 'https://via.placeholder.com/800x500/333333/ffffff?text=Scoot+S-Pro+(Scooter)')">View Details</button>
+                    <button class="btn" onclick="loadVehicleDetail('Scoot S-Pro', 'SCOOT-125', 1200, 'Scooter', 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Vespa_GTS_300_ie_Super_front-right_2013-08-10.jpg/640px-Vespa_GTS_300_ie_Super_front-right_2013-08-10.jpg')">View Details</button>
                 </div>
             </div>
 
@@ -180,11 +180,14 @@
             var section = document.getElementById('compare-section');
             if (section.style.display === 'none' || section.style.display === '') {
                 section.style.display = 'block';
+                
                 // Track Comparison View in GA4
                 window.dataLayer.push({
                     'event': 'compare_view',
                     'compare_items': ['Thunder X1', 'Scoot S-Pro']
                 });
+                
+                // Smooth scroll to comparison
                 setTimeout(function() {
                     section.scrollIntoView({behavior: "smooth"});
                 }, 100);
@@ -289,4 +292,3 @@
     </script>
 </body>
 </html>
-
