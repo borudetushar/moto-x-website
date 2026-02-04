@@ -203,4 +203,181 @@
         </div>
 
         <h3>Frequently Asked Questions</h3>
-        <ul style="line-height
+        <ul style="line-height: 1.8;">
+            <li><strong>How do I book a service?</strong> - Call your nearest dealer directly.</li>
+            <li><strong>What is the warranty period?</strong> - All vehicles come with a 3-year standard warranty.</li>
+            <li><strong>Where can I find spare parts?</strong> - Visit any authorized MOTO-X service center.</li>
+        </ul>
+    </div>
+
+    <div id="leadModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h3 id="modalTitle" style="margin-top: 0;">Book Test Drive</h3>
+            <p style="font-size: 0.9em; color: #666;">Complete the form below to schedule your ride.</p>
+            <form id="leadForm" onsubmit="handleFormSubmit(event)">
+                <input type="text" id="name" placeholder="Full Name" required>
+                <input type="email" id="email" placeholder="Email Address" required>
+                <input type="tel" id="phone" placeholder="Phone Number" required>
+                <select id="modelSelect">
+                    <option value="Thunder X1">Thunder X1</option>
+                    <option value="Scoot S-Pro">Scoot S-Pro</option>
+                </select>
+                
+                <div id="otp-section">
+                    <label style="font-size: 0.9em; color: #333; font-weight: bold;">Enter Verification Code</label>
+                    <p style="font-size: 0.8em; color: #666; margin: 5px 0;">(Check your 'phone' for code: 1234)</p>
+                    <input type="text" id="otpInput" placeholder="Enter OTP">
+                </div>
+
+                <button type="submit" id="submitBtn" class="btn" style="width: 100%;">Send Verification Code</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. Navigation Logic (Updated for Dealers & Support) ---
+        
+        function hideAllViews() {
+            document.getElementById('home-view').style.display = 'none';
+            document.getElementById('detail-view').style.display = 'none';
+            document.getElementById('dealers-view').style.display = 'none';
+            document.getElementById('support-view').style.display = 'none';
+            document.getElementById('compare-section').style.display = 'none';
+        }
+
+        function showHome() {
+            hideAllViews();
+            document.getElementById('home-view').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
+        function showDealers() {
+            hideAllViews();
+            document.getElementById('dealers-view').style.display = 'block';
+            window.dataLayer.push({ 'event': 'page_view', 'page_title': 'Dealers' });
+        }
+
+        function showSupport() {
+            hideAllViews();
+            document.getElementById('support-view').style.display = 'block';
+            window.dataLayer.push({ 'event': 'page_view', 'page_title': 'Support' });
+        }
+
+        function filterDealers() {
+            // Reset all
+            document.getElementById('dealer-ny').style.display = 'none';
+            document.getElementById('dealer-la').style.display = 'none';
+            document.getElementById('dealer-ch').style.display = 'none';
+            
+            // Show selected
+            var city = document.getElementById('citySelect').value;
+            if (city) {
+                document.getElementById('dealer-' + city).style.display = 'block';
+            }
+        }
+
+        function toggleCompare() {
+            var section = document.getElementById('compare-section');
+            if (section.style.display === 'none' || section.style.display === '') {
+                section.style.display = 'block';
+                // Track Comparison
+                window.dataLayer.push({
+                    'event': 'compare_view',
+                    'compare_items': ['Thunder X1', 'Scoot S-Pro']
+                });
+                setTimeout(function() {
+                    section.scrollIntoView({behavior: "smooth"});
+                }, 100);
+            } else {
+                section.style.display = 'none';
+            }
+        }
+
+        function loadVehicleDetail(name, id, price, category, imageUrl) {
+            hideAllViews();
+            document.getElementById('detail-view').style.display = 'block';
+            
+            // Populate Data
+            document.getElementById('detail-title').innerText = name;
+            document.getElementById('detail-cat').innerText = category;
+            document.getElementById('detail-price').innerText = "$" + price.toLocaleString();
+            document.getElementById('detail-img').src = imageUrl; 
+            
+            window.scrollTo(0, 0);
+
+            // Send Data to Google Tag Manager
+            window.dataLayer.push({
+                'event': 'view_item',
+                'ecommerce': {
+                    'currency': 'USD',
+                    'value': price,
+                    'items': [{
+                        'item_id': id,
+                        'item_name': name,
+                        'item_category': category,
+                        'price': price
+                    }]
+                }
+            });
+        }
+
+        // --- 2. Lead Form & OTP Logic ---
+
+        let otpStep = 1;
+
+        function openModal() {
+            document.getElementById('leadModal').style.display = 'flex';
+            otpStep = 1;
+            document.getElementById('otp-section').style.display = 'none';
+            document.getElementById('submitBtn').innerText = "Send Verification Code";
+            document.getElementById('submitBtn').style.background = "#ff4d4d";
+            document.getElementById('otpInput').required = false;
+            document.getElementById('otpInput').value = "";
+            window.dataLayer.push({ 'event': 'form_start' });
+        }
+
+        function closeModal() {
+            document.getElementById('leadModal').style.display = 'none';
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+
+            if (otpStep === 1) {
+                otpStep = 2;
+                document.getElementById('otp-section').style.display = 'block';
+                document.getElementById('submitBtn').innerText = "Verify & Book Test Drive";
+                document.getElementById('submitBtn').style.background = "#28a745"; 
+                document.getElementById('otpInput').required = true;
+                
+                window.dataLayer.push({
+                    'event': 'otp_sent',
+                    'phone_number': '***' 
+                });
+                
+                document.getElementById('otpInput').focus();
+
+            } else {
+                var enteredOTP = document.getElementById('otpInput').value;
+                if (enteredOTP === '1234') {
+                    window.dataLayer.push({ 'event': 'otp_verified' });
+                    window.dataLayer.push({
+                        'event': 'generate_lead',
+                        'ecommerce': {
+                            'currency': 'USD',
+                            'value': 500
+                        }
+                    });
+                    
+                    alert("Test Drive Confirmed! \n(Lead Data sent to Google Analytics)");
+                    closeModal();
+                } else {
+                    alert("Incorrect OTP. Please enter '1234'");
+                    window.dataLayer.push({ 'event': 'otp_failed' });
+                }
+            }
+        }
+    </script>
+</body>
+</html>
